@@ -1,0 +1,1 @@
+Chatbot app designed to answer user queries using information extracted from books. It leverages a simple search mechanism to locate relevant passages in pre-loaded texts and provides responses based on these passages
