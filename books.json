@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Kniha 1",
+        "author": "Autor 1",
+        "passages": [
+            {"text": "První pasáž knihy."},
+            {"text": "Druhá pasáž knihy."}
+        ]
+    },
+    {
+        "title": "Kniha 2",
+        "author": "Autor 2",
+        "passages": [
+            {"text": "Prvni pasaz druhe knihy."},
+            {"text": "Informace zde."}
+        ]
+    }
+]
