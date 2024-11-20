@@ -1,4 +1,5 @@
 import json
+from fuzzywuzzy import fuzz
 
 def load_books():
     """Nacte knihy ulozene v json souborech"""
@@ -16,8 +17,10 @@ def search_books(books, query):
     results = []
     for book in books:
         for passage in book["passages"]:
-            if query.lower() in passage["text"].lower():
-                results.append({"book": book["title"], "text": passage["text"]})
+            similarity = fuzz.partial_ratio(query.lower(), passage["text"].lower()) #pouzit fuzzy matching
+            if similarity > 70: #70 protoze prahova hodnota shoda
+                results.append({"book": book["title"], "text": passage["text"], "similarity": similarity})
+    results.sort(key=lamba x: x["similarity"], reverse=True) # serazeni podle podobnosti
     return results
 
 def main():
