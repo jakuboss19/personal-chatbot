@@ -1,27 +1,64 @@
 import sqlite3
 
-def add_books():
+def init_db():
     conn = sqlite3.connect("books.db")
     cursor = conn.cursor()
 
-    # Přidání knihy
     cursor.execute("""
-    INSERT INTO books (title, author, year) VALUES
-    ("Book 1", "Author 1", 2021),
-    ("Book 2", "Author 2", 2020)
+    CREATE TABLE IF NOT EXISTS books (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        author TEXT NOT NULL,
+        year INTEGER
+    )
     """)
 
-    # Přidání pasáží
     cursor.execute("""
-    INSERT INTO passages (book_id, text, chapter, page) VALUES
-    (1, "This is the first passage.", "Introduction", 1),
-    (1, "Another key insight.", "Chapter 1", 5),
-    (2, "A passage from Book 2.", "Prologue", 2)
+    CREATE TABLE IF NOT EXISTS passages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        book_id INTEGER,
+        text TEXT NOT NULL,
+        chapter TEXT,
+        page INTEGER,
+        FOREIGN KEY(book_id) REFERENCES books(id)
+    )
     """)
 
     conn.commit()
     conn.close()
-    print("Books and passages added successfully!")
+
+def insert_books(books):
+    """insert books into sql"""
+    conn = sqlite3.connect("books.db")
+    cursor = conn.cursor()
+    cursor.executemany("INSERT INTO books (title, author, year) VALUES (?, ?, ?)", books)
+    conn.commit()
+    conn.close()
+
+def insert_passages(passages):
+    """insert passages into sql"""
+    conn = sqlite3.connect("books.db")
+    cursor = conn.cursor()
+    cursor.executemany("INSERT INTO passages (book_id, text, chapter, page) VALUES (?, ?, ?, ?)", passages)
+    conn.commit()
+    conn.close()
+
+def add_sample_data():
+    """add data about books and passages"""
+    books = [
+        ("Book 1", "Author 1", 2021),
+        ("Book 2", "Author 2", 2020)
+    ]
+    passages = [
+        (1, "This is the first passage.", "Introduction", 1),
+        (1, "Another key insight.", "Chapter 1", 5),
+        (2, "A passage from Book 2.", "Prologue", 2)
+    ]
+
+    insert_books(books)
+    insert_passages(passages)
+    print("Sample data added successfully!")
 
 if __name__ == "__main__":
-    add_books()
+    init_db()
+    add_sample_data()
