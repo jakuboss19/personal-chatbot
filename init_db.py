@@ -4,7 +4,7 @@ def create_database():
     conn = sqlite3.connect("books.db")
     cursor = conn.cursor()
 
-    # Vytvoření tabulky pro knihy
+    # Create table for books
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,7 +14,7 @@ def create_database():
     )
     """)
 
-    # Vytvoření tabulky pro pasáže
+    # Create table for passages
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS passages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
