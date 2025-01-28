@@ -1,7 +1,7 @@
 import sqlite3
 
 def load_books():
-    """Načítá knihy a pasáže z databáze."""
+    """Load books and passages from db"""
     conn = sqlite3.connect("books.db")
     cursor = conn.cursor()
 
@@ -26,7 +26,7 @@ def load_books():
     return books
 
 def search_books(books, query):
-    """Vyhledá pasáže v načtených datech."""
+    """Searching books and passages"""
     results = [book for book in books if query.lower() in book["text"].lower()]
     return results
 
