@@ -1,4 +1,5 @@
 import sqlite3
+import re
 
 def load_books():
     """Load books and passages from db"""
@@ -25,9 +26,25 @@ def load_books():
         })
     return books
 
-def search_books(books, query):
-    """Searching books and passages"""
-    results = [book for book in books if query.lower() in book["text"].lower()]
+def search_books(books, query, search_in="text", case_sensitive=False):
+    """
+    Search books and passages
+    :param query: Search request
+    :param case_sensitive: IF False, not case sensitive
+    :return: List of searched passages
+    """
+    results = []
+    for book in books:
+        if search_in not in book:
+            continue  # IF not searched, continue
+
+        text_to_search = book[search_in]
+        if not case_sensitive:
+            text_to_search = text_to_search.lower()
+            query = query.lower()
+
+        if query in text_to_search:
+            results.append(book)
     return results
 
 def main():
