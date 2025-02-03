@@ -26,26 +26,38 @@ def load_books():
         })
     return books
 
-def search_books(books, query, search_in="text", case_sensitive=False):
+def search_books(query, search_in="text", case_sensitive=False):
     """
-    Search books and passages
-    :param query: Search request
-    :param case_sensitive: IF False, not case sensitive
-    :return: List of searched passages
+    Search books and passages directly in databaase
+    query: Search request
+    case_sensitive: IF False, not case sensitive
     """
-    results = []
-    for book in books:
-        if search_in not in book:
-            continue  # IF not searched, continue
+    conn = sqlite.connect("books.db")
+    cursor = conn.cursor()
 
-        text_to_search = book[search_in]
-        if not case_sensitive:
-            text_to_search = text_to_search.lower()
-            query = query.lower()
+    sql = f"""
+        SELECT books.title, books.author, books.year, passages.text, passages.chapter, passages.page 
+        FROM books
+        JOIN passages ON books.id = passages.book_id
+        WHERE {search_in} LIKE ?
+    """
 
-        if query in text_to_search:
-            results.append(book)
-    return results
+    if not case_sensitive:
+        query = query.lower()
+        sql = f"""
+            SELECT books.title, books.author, books.year, passages.text, passages.chapter, passages.page 
+            FROM books
+            JOIN passages ON books.id = passages.book_id
+            WHERE LOWER({search_in}) LIKE ?
+        """
+
+    cursor.execue(sql, (f"%{query}%",))
+    results = cursor.fetchall()
+    conn.close()
+    return [
+        {"title": row[0], "author": row[1], "year": row[2], "text": row[3], "chapter": row[4], "page": row[5]}
+        for row in results
+    ]
 
 def main():
     books = load_books()
@@ -57,7 +69,7 @@ def main():
             print("Děkujeme za použití aplikace!")
             break
         
-        results = search_books(books, query)
+        results = search_books(query)
         if results:
             print("\nNalezené pasáže:")
             for result in results:
