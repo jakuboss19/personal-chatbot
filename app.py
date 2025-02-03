@@ -1,5 +1,4 @@
 import sqlite3
-import re
 
 def load_books():
     """Load books and passages from db"""
