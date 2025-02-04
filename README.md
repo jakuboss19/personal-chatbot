@@ -4,7 +4,7 @@ This is a simple command-line application for searching books and passages store
 
 Load Books and Passages: The application retrieves books and their associated passages from an SQLite database
 
-Search Functionality: Users can search for text in:
+Search functionality: Users can search for text in:
 
 Book titles
 
@@ -14,6 +14,27 @@ Passages
 
 Other specified fields
 
-Case-Sensitive Search: Users can choose whether or not searches should be case-sensitive
+Case-Sensitive search: Users can choose whether or not searches should be case-sensitive
 
-Real-Time Database Querying: Searches are performed directly in the SQLite database, ensuring up-to-date results
+# Expected output
+
+Vítejte v chatovacím systému s databází knih!
+
+Zadejte otázku nebo 'exit' pro ukončení: science
+
+Nalezené pasáže:
+Z knihy: The Science of Everything (Autor: John Doe, Rok: 2022)
+Kapitola: 3, Strana: 45
+Text: Science is a method for understanding the world around us.
+
+english version
+
+Welcome to the book database chat system!
+
+Enter a query or type 'exit' to quit: science
+
+Found passages:
+From the book: The Science of Everything (Author: John Doe, Year: 2022)
+Chapter: 3, Page: 45
+Text: Science is a method for understanding the world around us.
+
