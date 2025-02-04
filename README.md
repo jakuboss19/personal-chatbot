@@ -1,4 +1,5 @@
-This is a simple command-line application for searching books and passages stored in an SQLite database. Users can search for text within book passages or filter results by book title, author, or other fields
+This is a simple command-line // tkinter (possible to choose) application for searching books and passages stored in an SQLite database. Users can search for text within book passages or filter results by book title, author, or other fields
+
 
 # Features
 
@@ -16,7 +17,7 @@ Other specified fields
 
 Case-Sensitive search: Users can choose whether or not searches should be case-sensitive
 
-# Expected output
+# Expected output for command-line version
 
 Vítejte v chatovacím systému s databází knih!
 
