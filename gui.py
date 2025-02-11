@@ -4,16 +4,22 @@ import sqlite3
 
 def search_passages(query):
     """Search books and passages directly in the database."""
-    conn = sqlite3.connect("books.db")
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT books.title, books.author, books.year, passages.text, passages.chapter, passages.page 
-        FROM books
-        JOIN passages ON books.id = passages.book_id
-        WHERE books.title LIKE ? OR books.author LIKE ? OR passages.text LIKE ?
-    """, (f"%{query}%", f"%{query}%", f"%{query}%"))
-    results = cursor.fetchall()
-    conn.close()
+    try:
+        conn = sqlite3.connect("books.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT books.title, books.author, books.year, passages.text, passages.chapter, passages.page 
+            FROM books
+            JOIN passages ON books.id = passages.book_id
+            WHERE books.title LIKE ? OR books.author LIKE ? OR passages.text LIKE ?
+        """, (f"%{query}%", f"%{query}%", f"%{query}%"))
+        results = cursor.fetchall()
+    except sqlite3.Error as e:
+        print(f"database error: {e}")
+        results = []
+    finally:
+        if conn:
+            conn.close()
     return results
 
 def perform_search():
