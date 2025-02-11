@@ -24,16 +24,17 @@ def search_passages(query):
 
 def perform_search():
     """Gets input from search field and updates the results table."""
-    query = search_entry.get()
-    results = search_passages(query)
-
-    # Clear previous search results
-    for row in results_tree.get_children():
-        results_tree.delete(row)
-
-    # Insert new search results
-    for result in results:
-        results_tree.insert("", tk.END, values=result)
+    query = search_entry.get().strip()
+    if query:
+        results = search_passages(query)
+        # Clear previous search results
+        for row in results_tree.get_children():
+            results_tree.delete(row)
+        # Insert new search results
+        for result in results:
+            results_tree.insert("", tk.END, values=result)
+    else:
+        print("Please enter a search query")
 
 # Create main window
 root = tk.Tk()
