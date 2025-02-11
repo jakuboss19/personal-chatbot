@@ -57,7 +57,7 @@ results_tree = ttk.Treeview(root, columns=columns, show="headings")
 
 for col in columns:
     results_tree.heading(col, text=col)
-    results_tree.column(col, width=150)
+    results_tree.column(col, width=tkFont.Font().measure(col) + 20)
 
 results_tree.pack(padx=10, pady=10, fill="both", expand=True)
 
