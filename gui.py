@@ -31,31 +31,38 @@ def perform_search():
             results_tree.insert("", tk.END, values=result)
     else:
         messagebox.showinfo("Input Required", "Please enter a search query")
+        
+def setup_ui():
+    """setup ui components"""
+    
+    # Create main window
+    root = tk.Tk()
+    root.title("Book Search")
 
-# Create main window
-root = tk.Tk()
-root.title("Book Search")
+    # Search bar
+    search_frame = ttk.Frame(root)
+    search_frame.pack(pady=10, padx=10, fill="x")
 
-# Search bar
-search_frame = ttk.Frame(root)
-search_frame.pack(pady=10, padx=10, fill="x")
+    ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT, padx=5)
+    search_entry = ttk.Entry(search_frame, width=50)
+    search_entry.pack(side=tk.LEFT, padx=5, expand=True, fill="x")
 
-ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT, padx=5)
-search_entry = ttk.Entry(search_frame, width=50)
-search_entry.pack(side=tk.LEFT, padx=5, expand=True, fill="x")
+    search_button = ttk.Button(search_frame, text="Search", command=perform_search)
+    search_button.pack(side=tk.LEFT, padx=5)
 
-search_button = ttk.Button(search_frame, text="Search", command=perform_search)
-search_button.pack(side=tk.LEFT, padx=5)
+    # Results table
+    columns = ("Title", "Author", "Year", "Passage", "Chapter", "Page")
+    results_tree = ttk.Treeview(root, columns=columns, show="headings")
 
-# Results table
-columns = ("Title", "Author", "Year", "Passage", "Chapter", "Page")
-results_tree = ttk.Treeview(root, columns=columns, show="headings")
+    for col in columns:
+        results_tree.heading(col, text=col)
+        results_tree.column(col, width=tkFont.Font().measure(col) + 20)
 
-for col in columns:
-    results_tree.heading(col, text=col)
-    results_tree.column(col, width=tkFont.Font().measure(col) + 20)
-
-results_tree.pack(padx=10, pady=10, fill="both", expand=True)
+    results_tree.pack(padx=10, pady=10, fill="both", expand=True)
+    return root, search_entry, results_tree
 
 # Run GUI loop
-root.mainloop()
+
+if __name__ == "__main__":
+    root, search_entry, results_tree = setup_ui()
+    root.mainloop()
