@@ -1,31 +1,32 @@
 import sqlite3
 
 def init_db():
-    conn = sqlite3.connect("books.db")
-    cursor = conn.cursor()
+     """Initialize the database and create tables."""
+    try:
+        with sqlite3.connect("books.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS books (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                author TEXT NOT NULL,
+                year INTEGER
+            )
+            """)
 
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS books (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        author TEXT NOT NULL,
-        year INTEGER
-    )
-    """)
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS passages (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        book_id INTEGER,
-        text TEXT NOT NULL,
-        chapter TEXT,
-        page INTEGER,
-        FOREIGN KEY(book_id) REFERENCES books(id)
-    )
-    """)
-
-    conn.commit()
-    conn.close()
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS passages (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                book_id INTEGER,
+                text TEXT NOT NULL,
+                chapter TEXT,
+                page INTEGER,
+                FOREIGN KEY(book_id) REFERENCES books(id)
+            )
+            """)
+            conn.commit()
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
 
 def insert_books(books):
     """insert books into sql"""
