@@ -30,7 +30,7 @@ def perform_search():
         for result in results:
             results_tree.insert("", tk.END, values=result)
     else:
-        print("Please enter a search query")
+        messagebox.showinfo("Input Required", "Please enter a search query")
 
 # Create main window
 root = tk.Tk()
