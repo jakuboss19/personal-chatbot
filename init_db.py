@@ -5,8 +5,20 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 def create_database():
-    conn = sqlite3.connect("books.db")
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect("books.db")
+        cursor = conn.cursor()
+
+        create_books_table(cursor)
+        create_passages_table(cursor)
+
+        conn.commit()
+    except sqlite3.Error as e:
+        logging.error(f"An error occurred: {e}")
+    finally:
+        if conn:
+            conn.close()
+    
 
     # Create table for books
     cursor.execute("""
