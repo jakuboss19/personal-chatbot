@@ -17,8 +17,8 @@ def create_database():
         year INTEGER
     )
     """)
-
-    # Create table for passages
+# Create table for passages
+def create_passages_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS passages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,9 +30,8 @@ def create_database():
     )
     """)
 
-    conn.commit()
-    conn.close()
-    print("Database and tables created successfully!")
+    logging.info("Passages table created successfully!")
+
 
 if __name__ == "__main__":
     create_database()
