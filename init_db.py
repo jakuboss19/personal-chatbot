@@ -1,4 +1,8 @@
 import sqlite3
+import logging
+
+#configure logging
+logging.basicConfig(level=logging.INFO)
 
 def create_database():
     conn = sqlite3.connect("books.db")
