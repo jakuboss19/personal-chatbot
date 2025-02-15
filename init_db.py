@@ -19,8 +19,8 @@ def create_database():
         if conn:
             conn.close()
     
-
-    # Create table for books
+# Create table for books
+def create_books_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,6 +29,7 @@ def create_database():
         year INTEGER
     )
     """)
+    
 # Create table for passages
 def create_passages_table(cursor):
     cursor.execute("""
