@@ -43,7 +43,7 @@ def load_books():
 
 def search_books(query, search_in="text", case_sensitive=False):
     """
-    Search books and passages directly in databaase
+    Search books and passages directly in database
     query: Search request
     case_sensitive: IF False, not case sensitive
     """
