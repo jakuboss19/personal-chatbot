@@ -15,9 +15,11 @@ def get_db_connection():
 
 def load_books():
     """Load books and passages from db"""
-    conn = sqlite3.connect("books.db")
+    conn = get_db_connection()
+    if conn is None:
+        return []
+    
     cursor = conn.cursor()
-
     cursor.execute("""
     SELECT b.title, b.author, b.year, p.text, p.chapter, p.page
     FROM books b
@@ -26,16 +28,17 @@ def load_books():
     rows = cursor.fetchall()
     conn.close()
 
-    books = []
-    for row in rows:
-        books.append({
+    books = [
+        {
             "title": row[0],
             "author": row[1],
             "year": row[2],
             "text": row[3],
             "chapter": row[4],
             "page": row[5]
-        })
+        }
+        for row in rows
+    ]
     return books
 
 def search_books(query, search_in="text", case_sensitive=False):
