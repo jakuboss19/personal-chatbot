@@ -47,9 +47,11 @@ def search_books(query, search_in="text", case_sensitive=False):
     query: Search request
     case_sensitive: IF False, not case sensitive
     """
-    conn = sqlite.connect("books.db")
+    conn = get_db_connection()
+    if conn is None:
+        return []
+    
     cursor = conn.cursor()
-
     sql = f"""
         SELECT books.title, books.author, books.year, passages.text, passages.chapter, passages.page 
         FROM books
@@ -63,7 +65,7 @@ def search_books(query, search_in="text", case_sensitive=False):
             SELECT books.title, books.author, books.year, passages.text, passages.chapter, passages.page 
             FROM books
             JOIN passages ON books.id = passages.book_id
-            WHERE LOWER({search_in}) LIKE ?
+            WHERE LOWER({search_in}) LIKE LOWER(?)
         """
 
     cursor.execue(sql, (f"%{query}%",))
