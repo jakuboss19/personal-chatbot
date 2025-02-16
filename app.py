@@ -1,4 +1,17 @@
 import sqlite3
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+def get_db_connection():
+    """Establish a database connection"""
+    try:
+        conn = sqlite3.connect("books.db")
+        return conn
+    except sqlite3.Error as e:
+        logging.error(f"Error connecting to database: {e}")
+        return None
 
 def load_books():
     """Load books and passages from db"""
