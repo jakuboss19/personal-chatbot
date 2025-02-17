@@ -1,5 +1,6 @@
 This is a simple command-line (or tkinter, is possible to choose) application for searching books and passages stored in an SQLite database. Users can search for text within book passages or filter results by book title, author, or other fields
 
+There is front end version too, interface is based on JS
 
 # Features
 
