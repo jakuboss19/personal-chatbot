@@ -13,9 +13,9 @@ Authors
 
 Passages
 
-Other specified fields
+Other specified fields:
 
-Case-Sensitive search: Users can choose whether or not searches should be case-sensitive
+- Case-Sensitive search: Users can choose whether or not searches should be case-sensitive
 
 # Expected output for command-line version
 
