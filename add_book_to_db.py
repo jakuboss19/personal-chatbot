@@ -1,6 +1,8 @@
 import sqlite3
 from extract_text import extract_text_from_pdf
 
+#script for frontend
+
 def insert_book(title, author, year):
     """Insert a book into the database."""
     conn = sqlite3.connect("books.db")
